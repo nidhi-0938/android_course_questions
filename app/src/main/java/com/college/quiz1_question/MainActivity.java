@@ -1,7 +1,9 @@
 package com.college.quiz1_question;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,82 +12,90 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String LOG_TAG="MainActivity";
-    // EditText view for the website URI
-    private EditText mWebsiteEditText;
-    // EditText view for the location URI
-    private EditText mLocationEditText;
-    // EditText view for the share text
-    private EditText mShareTextEditText;
-    //EditText for Dial action
-    private EditText mDialEditText;
+    // Current count.
+    private int mCount = 0;
+    // Current background color.
+    private int mColor;
+    // Text view to display both count and color.
+    private TextView mShowCountTextView;
+
+    // Key for current count
+    private final String COUNT_KEY = "count";
+    // Key for current color
+    private final String COLOR_KEY = "color";
+
+    // Shared preferences object
+    private SharedPreferences mPreferences;
+    // Name of shared preferences file
+    private static final String mSharedPrefFile = "mysharedprefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mWebsiteEditText = findViewById(R.id.website_edittext);
-        mLocationEditText = findViewById(R.id.location_editext);
-        mShareTextEditText = findViewById(R.id.share_edittext);
-        mDialEditText = findViewById(R.id.phone_edittext);
+        // Initialize views, color, preferences
+        mShowCountTextView = findViewById(R.id.count_textview);
+        mColor = ContextCompat.getColor(this, R.color.default_background);
+        mPreferences = getSharedPreferences(mSharedPrefFile, MODE_PRIVATE);
 
     }
 
-    // TODO
     /**
-     * Handles the onClick for the "Open Website" button.  Gets the URI
-     * from the edit text and sends an implicit intent for that URL.
+     * Handles the onClick for the background color buttons.
+     * Gets background color of the button
+     * that was clicked and sets the textview background to that color.
+     * Saves the current background
      *
      * @param view The view (Button) that was clicked.
      */
-    public void openWebsite(View view) {
+    public void changeBackground(View view) {
+        int color = ((ColorDrawable) view.getBackground()).getColor();
+        mShowCountTextView.setBackgroundColor(color);
+        mColor = color;
     }
 
-    // TODO
+    //TODO 1
     /**
-     * Handles the onClick for the "Open Location" button.  Gets the location
-     * text from the edit text and sends an implicit intent for that location.
-     *
-     * The location text can be any searchable geographic location.
+     * Handles the onClick for the Count button.  Increments the value of the mCount global and
+     * updates the textview.
      *
      * @param view The view (Button) that was clicked.
      */
-    public void openLocation(View view) {
-
+    public void countUp(View view) {
     }
 
-    // TODO
+    //TODO 2
     /**
-     * Handles the onClick for the "Share This Text" button.  The
-     * implicit intent here is created by the  {@link ShareCompat.IntentBuilder}
-     * class.  An app chooser appears with the available options for sharing.
-     *
-     * ShareCompat.IntentBuilder is from the v4 Support Library.
+     * Handles the onClick for the Reset button.
+     * Resets the global count and background
+     * variables to the defaults, resets the views to those values,
+     * and clears the shared preferences
      *
      * @param view The view (Button) that was clicked.
      */
-    public void shareText(View view) {
-
+    public void reset(View view) {
     }
 
-    // TODO
+    //TODO 3
     /**
-     * Handles the onClick for the "Dial" button.
+     * Handles the onClick for the 'Save Prefs' button.
+     * Saves the Color and Counter to shared preferences
      *
      * @param view The view (Button) that was clicked.
      */
-    public void dial(View view) {
+    public void savePrefs(View view) {
     }
 
-    // TODO
+    //TODO 4
     /**
-     * Handles the onClick for the "View Contacts" button.
+     * Handles the onClick for the 'Restaure Prefs' button.
+     * Reads the Color and Counter from the Preferences
+     * Updates the color and counter textviews.
      *
      * @param view The view (Button) that was clicked.
      */
-    public void viewContact(View view) {
-
+    public void restaurePrefs(View view) {
     }
 
 }
