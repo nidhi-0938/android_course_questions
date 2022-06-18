@@ -1,5 +1,10 @@
 # Practice projects for Android programming
 
+## Branch `main`
+Write in MainActivity.java, after the line //TODO the code to reset the counter when the button Reset is clicked.
+ - Note that MainActivity class contains a private attribute mCounter that tracks the value of the counter.
+ - You can also go ahead and implement the other buttons (i.e. Increment, Decrement, Toast etc.)
+
 ## Branch `Practice_1`
 Implement the 2 listeners for buttons 'clear' and 'pay'
  - One burger is $5
