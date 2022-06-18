@@ -18,23 +18,6 @@ public class MainActivity extends AppCompatActivity {
         TextView counterView = findViewById(R.id.counterId);
 
         //TODO
-        Button btnReset = findViewById(R.id.buttonResetId);
-        btnReset.setOnClickListener(click -> {
-            mCounter = 0;
-            counterView.setText(String.valueOf(mCounter));
-        });
-
-        Button btnIncrement = findViewById(R.id.buttonIncId);
-        btnIncrement.setOnClickListener((clck) -> {
-            mCounter++;
-            counterView.setText(String.valueOf(mCounter));
-        });
-
-        Button btnDecrement = findViewById(R.id.buttonDecId);
-        btnDecrement.setOnClickListener((clck) -> {
-            mCounter--;
-            mCounter = (mCounter < 0) ? 0 : mCounter;
-            counterView.setText(String.valueOf(mCounter));
-        });
+        // Your code goes here
     }
 }
