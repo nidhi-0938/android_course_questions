@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
