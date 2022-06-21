@@ -23,12 +23,25 @@ public class MainActivity extends AppCompatActivity {
         // the content of the numberId EditText by 5
         TextView resultTv = findViewById(R.id.resultId);
 
+        Button pay_btn= findViewById(R.id.btnPayId);
+        Button clear_btn = findViewById(R.id.btnResetId);
+
         // TODO
         // Implement the 2 listeners for buttons 'clear' and 'pay'
         // One burger is $5
         // Result should contain 5 multiplied by number chosen
         // Display should be prefixed with the '$' sign such as $15
         // Reset should clear all the fields
+
+        pay_btn.setOnClickListener(v -> {
+            mCounter=Integer.parseInt(numberStr.getText().toString());
+            resultTv.setText("$"+mCounter*5);
+        });
+
+        clear_btn.setOnClickListener(v -> {
+            resultTv.setText("0");
+            numberStr.setText("");
+        });
 
     }
 }
