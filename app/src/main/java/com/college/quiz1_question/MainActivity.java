@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void countUp(View view) {
+        mCount = mCount+1;
+        mShowCountTextView.setText(String.valueOf(mCount));
     }
 
     //TODO 2
@@ -76,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void reset(View view) {
+        mCount = 0;
+        mShowCountTextView.setText(String.valueOf(mCount));
+        mColor = ContextCompat.getColor(this, R.color.default_background);
+        mShowCountTextView.setBackgroundColor(mColor);
+       SharedPreferences.Editor editor =  mPreferences.edit();
+       editor.clear();
+       editor.apply();
     }
 
     //TODO 3
@@ -86,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void savePrefs(View view) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        mCount=Integer.parseInt(mShowCountTextView.getText().toString());
+        mColor= ((ColorDrawable)mShowCountTextView.getBackground()).getColor();
+        editor.putInt(COUNT_KEY,mCount);
+        editor.putInt(COLOR_KEY,mColor);
+        editor.apply();
+        Toast.makeText(MainActivity.this,"Pref Saved",Toast.LENGTH_SHORT).show();
     }
 
     //TODO 4
@@ -97,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void restaurePrefs(View view) {
+        mColor=mPreferences.getInt(COLOR_KEY,R.color.default_background);
+        mCount= mPreferences.getInt(COUNT_KEY,0);
+        mShowCountTextView.setText(String.valueOf(mCount));
+        mShowCountTextView.setBackgroundColor(mColor);
+        Toast.makeText(MainActivity.this,"Pref Restored",Toast.LENGTH_SHORT).show();
+
     }
 
 }
