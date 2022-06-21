@@ -1,12 +1,19 @@
 package com.college.quiz1_question;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.Manifest.permission.CALL_PHONE;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     //EditText for Dial action
     private EditText mDialEditText;
 
+    String website_link;
+    String location;
+    String shared_text;
+    String  number;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         mLocationEditText = findViewById(R.id.location_editext);
         mShareTextEditText = findViewById(R.id.share_edittext);
         mDialEditText = findViewById(R.id.phone_edittext);
-
     }
 
     // TODO
@@ -40,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void openWebsite(View view) {
+        website_link=mWebsiteEditText.getText().toString();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(website_link));
+        startActivity(intent);
     }
 
     // TODO
@@ -52,7 +67,11 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void openLocation(View view) {
-
+        location=mLocationEditText.getText().toString();
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+location);
+        Intent mapintent = new Intent(Intent.ACTION_VIEW,gmmIntentUri);
+        mapintent.setPackage("com.google.android.apps.maps");
+        startActivity(mapintent);
     }
 
     // TODO
@@ -66,16 +85,12 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void shareText(View view) {
-
-    }
-
-    // TODO
-    /**
-     * Handles the onClick for the "Dial" button.
-     *
-     * @param view The view (Button) that was clicked.
-     */
-    public void dial(View view) {
+        shared_text= mShareTextEditText.getText().toString();
+        new ShareCompat.IntentBuilder(MainActivity.this)
+                .setType("text/plain")
+                .setChooserTitle("Share text with: ")
+                .setText(shared_text)
+                .startChooser();
     }
 
     // TODO
@@ -85,7 +100,28 @@ public class MainActivity extends AppCompatActivity {
      * @param view The view (Button) that was clicked.
      */
     public void viewContact(View view) {
-
+        Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
+        startActivity(intent);
     }
 
+    // TODO
+    /**
+     * Handles the onClick for the "Dial" button.
+     *
+     * @param view The view (Button) that was clicked.
+     */
+    public void dial(View view) {
+        Toast.makeText(MainActivity.this,"Test",Toast.LENGTH_SHORT).show();
+
+        number = mDialEditText.getText().toString();
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:"+number));
+
+        if(ContextCompat.checkSelfPermission(MainActivity.this, CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+            startActivity(intent);
+        }else {
+            requestPermissions(new String[]{CALL_PHONE}, 1);
+        }
+
+    }
 }
